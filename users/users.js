@@ -1,9 +1,9 @@
 const express = require('express');
+const { login } = require("./controllers/route-logic");
 
 const router = express.Router();
+router.use(express.json());
 
-router.get('/login',(req,res) => {
-    res.send("Connected");
-});
+router.post('/login', login);
 
 module.exports = router;
