@@ -12,4 +12,8 @@ const login = (req, res) => {
     });
 }
 
-module.exports = { login };
+const register = (req, res) => {
+    res.send("Connected");
+}
+
+module.exports = { login, register };
