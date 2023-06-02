@@ -1,3 +1,5 @@
+const { client, dbname } = require("../../database.js");
+
 const feedback = function (email, password, callback) {
     console.log("Email: " + email);
     console.log("Password: " + password);
