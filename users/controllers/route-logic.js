@@ -30,12 +30,49 @@ const buildUser = async (credentials) => {
     }
 }
 
-const login = (req, res) => {     
+const validateUser = async (email, password) => {
+    const query = { email: email };
+
+    const user = await usersCollection.findOne(query);
+
+    if(user == null)
+    {
+        return 'noEmail';
+    }
+    else
+    {
+        if(password == user.password)
+        {
+            return 'valid';
+        }
+        else
+        {
+            return 'invalid';
+        }
+    }
+}
+
+const login = async (req, res) => {     
     const credentials = req.body;
 
-    feedback(credentials.email, credentials.password, () => {
-        res.send("Connected!");
-    });
+    const status = await validateUser(credentials.email,credentials.password);
+
+    if(status == 'valid')
+    {
+        res.status(200).send("Validated");
+    }
+    else if(status == 'invalid')
+    {
+        res.status(401).send("Wrong Password");
+    }
+    else if(status == 'noEmail')
+    {
+        res.status(400).send("Email Not Found");
+    }
+    else
+    {
+        res.status(500).send("Unknown Error");
+    }
 }
 
 const register = async (req, res) => {
