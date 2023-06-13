@@ -35,43 +35,24 @@ const validateUser = async (email, password) => {
 
     const user = await usersCollection.findOne(query);
 
-    if(user == null)
-    {
-        return 'noEmail';
-    }
-    else
-    {
-        if(password == user.password)
-        {
-            return 'valid';
-        }
-        else
-        {
-            return 'invalid';
-        }
-    }
+    return user;
 }
 
 const login = async (req, res) => {     
     const credentials = req.body;
 
-    const status = await validateUser(credentials.email,credentials.password);
+    const user = await validateUser(credentials.email,credentials.password);
 
-    if(status == 'valid')
+    if(user != null)
     {
-        res.status(200).send("Validated");
+        let resUser = {
+            id: user._id
+        }
+        res.status(200).send(resUser);
     }
-    else if(status == 'invalid')
+    else if(user == null)
     {
-        res.status(401).send("Wrong Password");
-    }
-    else if(status == 'noEmail')
-    {
-        res.status(400).send("Email Not Found");
-    }
-    else
-    {
-        res.status(500).send("Unknown Error");
+        res.status(401).send("Invalid");
     }
 }
 
