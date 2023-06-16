@@ -41,7 +41,7 @@ const validateUser = async (email, password) => {
 const login = async (req, res) => {     
     const credentials = req.body;
 
-    const user = await validateUser(credentials.email,credentials.password);
+    /*const user = await validateUser(credentials.email,credentials.password);
 
     if(user != null)
     {
@@ -53,7 +53,16 @@ const login = async (req, res) => {
     else if(user == null)
     {
         res.status(401).send("Invalid");
+    }*/
+
+    let testResponse = {
+        id: 999999,
+        firstName: 'Test',
+        lastName: 'User'
     }
+
+    if(credentials.email === '') res.status(401).send('Invalid');
+    else res.status(200).send(testResponse);
 }
 
 const register = async (req, res) => {
