@@ -33,15 +33,30 @@ const buildUser = async (credentials) => {
 const validateUser = async (email, password) => {
     const query = { email: email };
 
-    const user = await usersCollection.findOne(query);
+    let user = await usersCollection.findOne(query);
 
-    return user;
+    if(user == null)
+    {
+        return user;
+    }
+    else
+    {
+        if(password == user.password)
+        {
+            return user;
+        }
+        else
+        {
+            user = null;
+            return user;
+        }
+    }
 }
 
 const login = async (req, res) => {     
     const credentials = req.body;
 
-    /*const user = await validateUser(credentials.email,credentials.password);
+    const user = await validateUser(credentials.email,credentials.password);
 
     if(user != null)
     {
@@ -53,16 +68,16 @@ const login = async (req, res) => {
     else if(user == null)
     {
         res.status(401).send("Invalid");
-    }*/
+    }
 
-    let testResponse = {
+    /*let testResponse = {
         id: 999999,
         firstName: 'Test',
         lastName: 'User'
     }
 
     if(credentials.email === '') res.status(401).send('Invalid');
-    else res.status(200).send(testResponse);
+    else res.status(200).send(testResponse); */
 }
 
 const register = async (req, res) => {
