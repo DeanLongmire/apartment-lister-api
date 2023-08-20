@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { client, dbname } = require("../../database.js");
 
 const usersCollection = client.db(dbname).collection("Users");
@@ -6,6 +7,24 @@ const feedback = function (email, password, callback) {
     console.log("Email: " + email);
     console.log("Password: " + password);
     callback();
+}
+
+const findUser = async (id) => {
+    const query = { _id: new ObjectId(id) };
+    let user;
+
+    try {
+        user = await usersCollection.findOne(query);
+        console.log(user);
+    } catch(error) {
+        throw error;
+    }
+
+    if(user == null) {
+        throw new Error("User not found");
+    } else {
+        return user;
+    }
 }
 
 const insertUser = async (newUser) => {
@@ -34,6 +53,7 @@ const validateUser = async (email, password) => {
     const query = { email: email };
 
     let user = await usersCollection.findOne(query);
+    console.log(user);
 
     if(user == null)
     {
@@ -60,23 +80,27 @@ const login = async (req, res) => {
 
     if(user != null)
     {
+        stringId = user._id.toString();
         let resUser = {
-            id: user._id
+            id: stringId,
+            token: 'secret token'
         }
-        res.status(200).send(resUser);
+        console.log(stringId);
+        res.status(200).json(resUser);
     }
     else if(user == null)
     {
-        res.status(401).send("Invalid");
+        res.status(401).send("Invalid Username or Password");
     }
 
+    //offline testing
     /*let testResponse = {
         id: 999999,
         firstName: 'Test',
         lastName: 'User'
     }
 
-    if(credentials.email === '') res.status(401).send('Invalid');
+    if(credentials.email === '') res.status(401).send('Invalid' Username or Password);
     else res.status(200).send(testResponse); */
 }
 
@@ -87,4 +111,15 @@ const register = async (req, res) => {
     res.send("User Created");
 }
 
-module.exports = { login, register };
+const getUser = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        let user = await findUser(id);
+        res.status(200).send(user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+module.exports = { login, register, getUser };
