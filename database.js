@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 const uri = require("./atlas_uri");
 
 const client = new MongoClient(uri);
-const dbname = "DynProgData";
+const dbname = "apartment-lister";
 
 const connectToDatabase = async () => {
     try {

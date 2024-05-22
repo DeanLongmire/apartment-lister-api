@@ -1,5 +1,3 @@
-# DreamTeam-API
+# apartment-lister-api
 
-See [DreamTeamV2](https://github.com/DeanLongmire/DreamTeamV2)
-
-Going to try and use MongoDB
+See [apartment-lister](https://github.com/DeanLongmire/apartment-lister)
