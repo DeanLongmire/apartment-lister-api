@@ -7,7 +7,25 @@ const getApartments = async(req, res) => {
     let allApartmentsCursor = await apartmentCollection.find();
     let allApartments = await allApartmentsCursor.toArray();
 
+    console.log(allApartments);
+
     res.status(200).send(allApartments);
 }
 
-module.exports = { getApartments };
+const updateValue = async(req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    const filter = { name: id };
+
+    const updateDocument = {
+        $set: {
+            [body.valueToUpdate]: body.value,
+        }
+    }
+
+    const result = await apartmentCollection.updateOne(filter, updateDocument);
+
+    res.status(200).send(result);
+}
+
+module.exports = { getApartments, updateValue };
