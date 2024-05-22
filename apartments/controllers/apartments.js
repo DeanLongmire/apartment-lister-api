@@ -28,4 +28,13 @@ const updateValue = async(req, res) => {
     res.status(200).send(result);
 }
 
-module.exports = { getApartments, updateValue };
+const deleteApartment = async(req, res) => {
+    const id = req.params.id;
+    const filter = { name: id };
+
+    const result = await apartmentCollection.deleteOne(filter);
+
+    res.status(200).send(result);
+}
+
+module.exports = { getApartments, updateValue, deleteApartment };
