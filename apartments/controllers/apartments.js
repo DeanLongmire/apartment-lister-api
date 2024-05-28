@@ -16,11 +16,20 @@ const updateValue = async(req, res) => {
     const id = req.params.id;
     const body = req.body;
     const filter = { name: id };
+    let updateDocument;
 
-    const updateDocument = {
-        $set: {
-            [body.valueToUpdate]: body.value,
-            numOfChecks: body.numOfChecks,
+    if(body.numOfChecks) {
+        updateDocument = {
+            $set: {
+                [body.valueToUpdate]: body.value,
+                numOfChecks: body.numOfChecks,
+            }
+        }
+    } else {
+        updateDocument = {
+            $set: {
+                [body.valueToUpdate]: body.value,
+            }
         }
     }
 
