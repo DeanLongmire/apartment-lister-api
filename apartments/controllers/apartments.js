@@ -20,6 +20,7 @@ const updateValue = async(req, res) => {
     const updateDocument = {
         $set: {
             [body.valueToUpdate]: body.value,
+            'numOfChecks': body.numOfChecks,
         }
     }
 
@@ -51,6 +52,7 @@ const createApartment = async(req,res) => {
         twoBathrooms: false,
         connectedBathrooms: false,
         porch: false,
+        numOfChecks: 0
     }
 
     const result = await apartmentCollection.insertOne(apartment);
