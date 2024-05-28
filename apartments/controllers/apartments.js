@@ -37,4 +37,24 @@ const deleteApartment = async(req, res) => {
     res.status(200).send(result);
 }
 
-module.exports = { getApartments, updateValue, deleteApartment };
+const createApartment = async(req,res) => {
+    body = req.body;
+    console.log(body);
+    console.log(body.name);
+
+    let apartment = {
+        name: body.name,
+        availability: '',
+        rent: '',
+        washerDryer: false,
+        twoBathrooms: false,
+        connectedBathrooms: false,
+        porch: false,
+    }
+
+    const result = await apartmentCollection.insertOne(apartment);
+
+    res.status(201).send(result);
+}
+
+module.exports = { getApartments, updateValue, deleteApartment, createApartment };
