@@ -20,7 +20,7 @@ const updateValue = async(req, res) => {
     const updateDocument = {
         $set: {
             [body.valueToUpdate]: body.value,
-            'numOfChecks': body.numOfChecks,
+            numOfChecks: body.numOfChecks,
         }
     }
 
