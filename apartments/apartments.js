@@ -5,7 +5,7 @@ const router = express.Router();
 router.use(express.json());
 
 router.get('/', getApartments);
-router.post('/', createApartment);
+router.patch('/', createApartment);
 router.patch('/:id', updateValue);
 router.delete('/:id', deleteApartment);
 
