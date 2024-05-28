@@ -9,7 +9,7 @@ const PORT = 5000;
 const apartmentRoutes = require('./apartments/apartments.js');
 
 app.use(cors({
-    origin: 'http://localhost:4200', //configured to accept connection from DreamTeam-v2 localhost
+    origin: '*',
 }));
 
 app.use('/apartments',apartmentRoutes);
