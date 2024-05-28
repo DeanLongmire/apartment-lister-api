@@ -1,14 +1,7 @@
 const { MongoClient } = require('mongodb');
 const uri = require("./atlas_uri");
 
-console.log(uri);
-
-const client = new MongoClient(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    tls: false,
-    tlsAllowInvalidCertificates: true, // Use true if you want to disable certificate validation (not recommended for production)
-  });
+const client = new MongoClient(uri);
 const dbname = "apartment-lister";
 
 const connectToDatabase = async () => {
